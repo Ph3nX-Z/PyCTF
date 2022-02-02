@@ -4,9 +4,19 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/login/')
+@app.route('/login/', methods=["POST","GET"])
 def my_form():
-    return render_template("login.html")
+    if request.method=="POST":
+        email = request.values.get("email")
+        password = request.values.get("password")
+        print("ok")
+
+    else:
+        return render_template("login.html")
+
+@app.route('/register/', methods=["POST","GET"])
+def register():
+    pass
 
 #app.logger.disabled = True
 app.run(port=80,threaded=True,host="0.0.0.0")
