@@ -1,7 +1,10 @@
 from lxml import etree
+import xml.etree.ElementTree as ET
 import os
+import hashlib
+
 class User:
-    def __init__(self,right,pseudo,points,id,email,password):
+    def __init__(self,right="",pseudo="",points="",id="",email="",password=""):
         self.right = right
         self.pseudo = pseudo
         self.points = points
@@ -29,15 +32,53 @@ class User:
             with open(f"./users/{self.email}.xml",'w') as file:
                 file.write(etree.tostring(user,pretty_print=True).decode("utf-8"))
         else:
-            raise "File already exists ! User already registered !"
+            raise ValueError("[-] File already exists ! User already registered !")
 
-    def import_user(self):
-        pass
+    def import_user(self,email):
+        if os.path.isdir("./users/"):
+            if os.path.isfile(f"./users/{email}.xml"):
+                tree = ET.parse(f"./users/{email}.xml")
+                root = tree.getroot()
+                values = [values.text for values in root[0]] # Get only infos keys
+                self.pseudo = values[0]
+                self.points = values[1]
+                self.right = values[2]
+                self.email = values[3]
+                self.password = values[4]
+                self.id = root[0].attrib["id"]
+                print("[+] Imported !")
+            else:
+                raise ValueError("[-] This email does not have entry !")
+        else:
+            raise ValueError("[-] ./users/ directory does not exists !")
+
+    def destroy_entry(self,email):
+        if os.path.isfile(f"./users/{email}.xml"):
+            if input(f"Do you really want to delete ./users/{email}.xml ? y/n :").lower()=="y":
+                os.remove(f"./users/{email}.xml")
+            else:
+                print("[-] Cancelled By user")
+        else:
+            raise ValueError("[-] Email not registered !")
 
     def hash_pass(self):
-        pass
+        dk = hashlib.pbkdf2_hmac('sha256', bytes(self.password,'utf-8'), bytes(self.pseudo+self.email+self.id,"utf-8"), 100000)
+        self.password = dk.hex()
+        print("[+] Password Hashed !")
+    
+    def check_pass(self,clearpass,email):
+        self.import_user(email)
+        if hashlib.pbkdf2_hmac('sha256', bytes(clearpass,'utf-8'), bytes(self.pseudo+self.email+self.id,"utf-8"), 100000).hex()==self.password:
+            return True
+        return False
         
 if __name__=="__main__":
+    #user = User()
+    #user.import_user("ph3nxx@protonmail.com")
+    #user.hash_pass()
+    #print(user.password,user.points,user.right,user.pseudo,user.id,user.email)
     user1=User("admin","Ph3nX","10000","0","ph3nxx@protonmail.com","motdepasse")
+    user1.destroy_entry("ph3nxx@protonmail.com")
     user1.hash_pass()
     user1.export_user()
+    user1.check_pass("motdepasse","ph3nxx@protonmail.com")

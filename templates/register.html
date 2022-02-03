@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style-with-prefix.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-with-prefix2.css') }}">
     <style>
         .srouce{
             text-align: center;
@@ -15,11 +15,11 @@
     </style>
 </head>
 <body>
-    <h1>Login panel</h1>
+    <h1>Sign in panel</h1>
     <div class="main-container">
         <div class="form-container">
             <div class="form-body">
-                <h2 class="title">Log in</h2>
+                <h2 class="title">Sign in</h2>
 
                 <form method="POST" class="the-form">
 
@@ -29,7 +29,10 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="Enter your password">
 
-                    <input type="submit" value="Log In">
+                    <label for="nickname">Nickname</label>
+                    <input type="nickname" name="nickname" id="nickname" placeholder="Enter your nickname">
+
+                    <input type="submit" value="Sign In">
 
                 </form>
 
@@ -37,7 +40,7 @@
 
             <div class="form-footer">
                 <div>
-                    <span>Don't have an account?</span> <a href="../register">Sign Up</a>
+                    <span>Already have an account?</span> <a href="../login">Login</a>
                 </div>
             </div><!-- FORM FOOTER -->
 
