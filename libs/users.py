@@ -67,7 +67,10 @@ class User:
         print("[+] Password Hashed !")
     
     def check_pass(self,clearpass,email):
-        self.import_user(email)
+        try:
+            self.import_user(email)
+        except ValueError:
+            return False
         if hashlib.pbkdf2_hmac('sha256', bytes(clearpass,'utf-8'), bytes(self.pseudo+self.email+self.id,"utf-8"), 100000).hex()==self.password:
             return True
         return False

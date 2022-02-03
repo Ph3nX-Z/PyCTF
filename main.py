@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template, redirect, send_from_directory, make_response
 from webob import second
 from libs.users import *
+from libs.utils import *
 import time
+import datetime
 
 global start_time 
 start_time = time.time()
@@ -10,13 +12,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     global start_time
-    duration = time.time() - start_time
-    minute = duration % 360
-    hour = minute%60
-    second = hour%60
-    hour=hour//60
-    minute = minute//60
-    return render_template("index.html",hour=int(hour),minute=int(minute))
+    seconds = int(time.time()) - start_time
+    minutes = seconds//60
+    hours = seconds//3600
+    return render_template("index.html",hour=int(hours),minute=int(minutes))
 
 @app.route('/login/', methods=["POST","GET"])
 def my_form():
@@ -25,9 +24,13 @@ def my_form():
         password = request.values.get("password")
         user = User()
         if user.check_pass(password,email):
-            return "Logged in"
+            expire_date = datetime.datetime.now()
+            expire_date = expire_date + datetime.timedelta(hours=1)
+            res = make_response(redirect("/user", code=302))
+            res.set_cookie('user', generate_cookie(40,email), expires=expire_date)
+            return res
         else:
-            return "WRONG"
+            return redirect("/register/", code=302)
 
     else:
         return render_template("login.html")
@@ -55,10 +58,19 @@ def register():
             user.export_user()
         except ValueError:
             return render_template("register.html",status="User already exists !")
-        return render_template("register.html",status="Done !")
+        return redirect("/login/", code=302)
 
     else:
         return render_template("register.html")
+
+
+@app.route('/user/')
+def user():
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            user = get_email_cookie(request.cookies.get("user"))
+            return user
+    return redirect("/login/", code=302)
 
 #app.logger.disabled = True
 app.run(port=80,threaded=True,host="0.0.0.0")
