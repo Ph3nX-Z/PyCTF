@@ -77,11 +77,11 @@ class User:
         
 if __name__=="__main__":
     #user = User()
-    #user.import_user("ph3nxx@protonmail.com")
+    #user.import_user("email")
     #user.hash_pass()
     #print(user.password,user.points,user.right,user.pseudo,user.id,user.email)
-    user1=User("admin","Ph3nX","10000","0","ph3nxx@protonmail.com","motdepasse")
-    user1.destroy_entry("ph3nxx@protonmail.com")
+    user1=User("admin","Ph3nX","10000","0","email","motdepasse")
+    user1.destroy_entry("email")
     user1.hash_pass()
     user1.export_user()
-    user1.check_pass("motdepasse","ph3nxx@protonmail.com")
+    user1.check_pass("motdepasse","email")
