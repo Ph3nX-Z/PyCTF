@@ -3,15 +3,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
 
     </head>
     <body>
         <section class="horizontalbar">
             <nav class="navbar navbar-dark bg-dark">
                         
-                        <h1 class="navbar-brand"><img src="logo3.png" width="30" height="30" class="d-inline-block align-top" alt="">PyCTF Dashboard</h1>
-                        <a href="/home/" class="nav-link">Home</a>
+                        <h1 class="navbar-brand"><img src="/static/logo3.png" width="30" height="30" class="d-inline-block align-top" alt="">PyCTF Dashboard</h1>
+                        <a href="../user/" class="nav-link">Home</a>
                         <a href="/stats/" class="nav-link">Stats</a>
                         <a href="/instances/" class="nav-link" >Instances</a>
                         <span>

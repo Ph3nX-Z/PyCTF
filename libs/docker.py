@@ -25,6 +25,19 @@ def delete_container(id):
     except:
         raise "Failed"
 
+def deploy_instance_user(file,email):
+    if not os.path.isdir("./instances/"):
+        os.mkdir("./instances/")
+    if not os.path.isfile("./instances/instances.all"):
+        with open(f"./instances/instances.all",'w') as file:
+            file.write("")
+    with open(f"./instances/instances.all",'r') as file:
+        if file.read().count(email)>3:
+            return False # ce qui signifie que le user a trop d'instances actives
+    with open(f"./instances/instances.all",'a') as file:
+        file.write(f"{email}-{docker_build(file)}")
+        return True # bien effectué
+
 if __name__=="__main__":
     delete_all()
     print(docker_build("./dockerfiles/Test"))

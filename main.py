@@ -72,5 +72,31 @@ def user():
             return user
     return redirect("/login/", code=302)
 
+@app.route('/instances/', methods=["POST","GET"])
+def instances():
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            if request.method=="GET":
+                email = get_email_cookie(request.cookies.get("user"))
+                try:
+                    with open("./instances/instances.all") as file:
+                        liste_active_instances = []
+                        for i in file.read().split("\n"):
+                            if email in i:
+                                liste_active_instances.append(i.split("-")[1])
+                    return render_template("instances.html",instances=str(liste_active_instances))
+                except:
+                    return render_template("instances.html",instances="No instances")
+            else:
+                print(request.form.get("auto"))
+                return "post"
+    return redirect("/login/", code=302)
+
+@app.route("/logout/")
+def logout():
+    resp = make_response(render_template("index.html"))
+    resp.delete_cookie('user')
+    return resp
+
 #app.logger.disabled = True
 app.run(port=80,threaded=True,host="0.0.0.0")
