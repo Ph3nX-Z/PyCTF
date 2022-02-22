@@ -1,0 +1,8 @@
+1-chall1-cat1-flag1
+2-chall2-cat1-flag2
+3-chall3-cat2-flag3
+4-chall4-cat3-flag4
+5-chall5-cat4-flag5
+6-chall6-cat4-flag5
+7-chall7-cat4-flag5
+8-chall8-cat4-flag5

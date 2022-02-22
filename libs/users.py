@@ -34,6 +34,28 @@ class User:
         else:
             raise ValueError("[-] File already exists ! User already registered !")
 
+    def update_user(self):
+        if not os.path.isdir("users"):
+            os.mkdir("./users/")
+        user = etree.Element("user")
+        infos = etree.SubElement(user,"infos")
+        infos.set("id",self.id)
+        pseudo = etree.SubElement(infos,"pseudo")
+        pseudo.text = self.pseudo
+        points = etree.SubElement(infos,"points")
+        points.text = self.points
+        right = etree.SubElement(infos,"right")
+        right.text = self.right
+        email = etree.SubElement(infos,"email")
+        email.text = self.email
+        password = etree.SubElement(infos,"password")
+        password.text = self.password
+        if os.path.isfile(f"./users/{self.email}.xml"):
+            with open(f"./users/{self.email}.xml",'w') as file:
+                file.write(etree.tostring(user,pretty_print=True).decode("utf-8"))
+        else:
+            raise ValueError("This user does not exists")
+
     def import_user(self,email):
         if os.path.isdir("./users/"):
             if os.path.isfile(f"./users/{email}.xml"):
@@ -74,7 +96,8 @@ class User:
         if hashlib.pbkdf2_hmac('sha256', bytes(clearpass,'utf-8'), bytes(self.pseudo+self.email+self.id,"utf-8"), 100000).hex()==self.password:
             return True
         return False
-        
+    
+
 if __name__=="__main__":
     #user = User()
     #user.import_user("email")

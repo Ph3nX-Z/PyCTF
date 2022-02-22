@@ -1,5 +1,5 @@
 FROM ubuntu
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt update
-RUN ls
-CMD ["ps"]
+RUN echo {{random}}
+CMD ["nano"]

@@ -19,6 +19,22 @@
                         </span>
         </section>
         <section class="main">
+            <h1 style="text-align: center;font-size: 7em;height: 100%;padding-top: 20%;">All Docker Instances</h1>
+            <div class="container">
+            {%for instance in instances%}
+            <div class="card col-sm" style="width: 100%;">
+                <img src="/static/docker.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{instance}}</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary stretched-link">Go somewhere</a>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            {%endfor%}
+            </div>
+            <h1>Deploy an instance</h1>
             <form method="POST">
               <select class="custom-select" name="auto">
                 <option value="0" selected>Open this select menu</option>

@@ -2,6 +2,8 @@ from flask import Flask, request, render_template, redirect, send_from_directory
 from webob import second
 from libs.users import *
 from libs.utils import *
+from libs.docker import *
+from libs.graphs import *
 import time
 import datetime
 
@@ -84,17 +86,45 @@ def instances():
                         for i in file.read().split("\n"):
                             if email in i:
                                 liste_active_instances.append(i.split("-")[1])
-                    return render_template("instances.html",instances=str(liste_active_instances))
+                    return render_template("instances.html",instances=liste_active_instances)
                 except:
                     return render_template("instances.html",instances="No instances")
             else:
-                print(request.form.get("auto"))
-                return "post"
+                name = request.form.get("auto")
+                email = get_email_cookie(request.cookies.get("user"))
+                if deploy_instance_user(name,email):
+                    return redirect("/instances/", code=302)
+                else:
+                    return redirect("/instances/", code=302)
+    return redirect("/login/", code=302)
+
+@app.route("/submit/", methods=["POST","GET"])
+def submit():
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            if request.method=="GET":
+                user = User()
+                email = get_email_cookie(request.cookies.get("user"))
+                user.import_user(email)
+                points = user.points
+                cat = get_cat_for_email(email)
+                generate_graph(cat, email)
+                with open("./var/challs.txt","r") as file:
+                    challs = file.read().split("\n")
+                challs = [f"{i.split('-')[0]} {i.split('-')[1]} {i.split('-')[3]}" for i in challs]
+                return render_template("submit_flag.html",challs_with_number = challs, points=points,email=email)
+            else:
+                email = get_email_cookie(request.cookies.get("user"))
+                id = request.values.get("id")
+                flag = request.values.get("flag")
+                submit_flag(email,flag,id)
+                refresh_points(email)
+                return redirect("/submit/", code=302)
     return redirect("/login/", code=302)
 
 @app.route("/logout/")
 def logout():
-    resp = make_response(render_template("index.html"))
+    resp = make_response(redirect("/", code=302))
     resp.delete_cookie('user')
     return resp
 

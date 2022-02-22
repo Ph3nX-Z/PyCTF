@@ -1,6 +1,9 @@
 .horizontalbar {
     color:white;
 }
+html {
+    background-color: #f4f0ec;
+}
 .horizontalbar :last-child {
     margin-right: 1em;
 }
