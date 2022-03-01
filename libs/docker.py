@@ -17,7 +17,9 @@ def docker_build(file):
     os.remove(filename)
     for i in out.split("\n"):
         if "Successfully built" in i:
+            #execute_cmd(f"docker run -it {i.split()[2]}")
             return i.split()[2]
+
 
 def delete_all():
     with open("./instances/instances.all",'w') as file:
@@ -51,7 +53,7 @@ def deploy_instance_user(docker_id,email):
         with open(f"./instances/instances.all",'w') as file:
             file.write("")
     with open(f"./instances/instances.all",'r') as file:
-        if file.read().count(email)>3:
+        if file.read().count(email)>0:
             return False # ce qui signifie que le user a trop d'instances actives
     with open(f"./instances/instances.all",'a') as file:
         out = docker_build(f'./dockerfiles/{docker_name}')

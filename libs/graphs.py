@@ -7,7 +7,7 @@ import multiprocessing
 
 
 
-def generate_graph_multi(dico,email):
+def generate_graph(dico,email):
     dico_temp = {"group":["A"]}
     for i in dico.keys():
         dico_temp[i] = [dico[i]*10]
@@ -56,10 +56,6 @@ def generate_graph_multi(dico,email):
     os.remove(f'./static/{random_str}.png')
     plt.clf()
 
-def generate_graph(dico,email):
-    global process
-    process = multiprocessing.Process(target=generate_graph, args=(dico,email,))
-    process.start()
 
 if __name__=="__main__":
     pass
