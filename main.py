@@ -86,9 +86,13 @@ def instances():
                         for i in file.read().split("\n"):
                             if email in i:
                                 liste_active_instances.append(i.split("-")[1])
-                    return render_template("instances.html",instances=liste_active_instances)
+                    try:
+                        ip = get_ip_by_id(liste_active_instances[0])
+                    except:
+                        ip=None
+                    return render_template("instances.html",instances=liste_active_instances,ip=ip)
                 except:
-                    return render_template("instances.html",instances="No instances")
+                    return redirect("/home/", code=302)
             else:
                 name = request.form.get("auto")
                 email = get_email_cookie(request.cookies.get("user"))

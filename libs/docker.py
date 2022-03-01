@@ -1,11 +1,29 @@
 import os
 import random
+import _thread
+
 
 def execute_cmd(cmd):
     return "".join(list(os.popen(cmd)))
 
+def get_ip_by_id(id):
+    out = execute_cmd("docker container ps -a")
+    final = ""
+    for i in out.split("\n")[1:]:
+        if id in i:
+            final = i
+    final = final.replace("   "," ").split()
+    back = execute_cmd("docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"+f" {final[0]}").split("\n")[0]
+    return back
+
+def create_docker_network():
+    execute_cmd("docker network create --subnet=172.18.0.0/16 network1")
+
 def list_dockers():
     return execute_cmd("docker container ls")
+
+def exec_docker(id):
+    execute_cmd(f"docker run --net network1 -it {id}")
 
 def docker_build(file):
     with open(file,"r") as fich:
@@ -17,8 +35,12 @@ def docker_build(file):
     os.remove(filename)
     for i in out.split("\n"):
         if "Successfully built" in i:
-            #execute_cmd(f"docker run -it {i.split()[2]}")
-            return i.split()[2]
+            try:
+                _thread.start_new_thread(exec_docker,(i.split()[2],))
+                return i.split()[2]
+            except:
+                pass
+
 
 
 def delete_all():
@@ -64,7 +86,9 @@ def deploy_instance_user(docker_id,email):
             return False
 
 if __name__=="__main__":
-    delete_all()
-    print(docker_build("./dockerfiles/Test"))
-    list_dockers()
+    #print(get_ip_by_id("8c4a3e0f1204"))
+    #delete_all()
+    #print(docker_build("./dockerfiles/Test"))
+    #list_dockers()
     #delete_container("bfba93f9dbbb")
+    pass
