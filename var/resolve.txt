@@ -249,3 +249,7 @@
 7-chall7-a@a.a-flag5-cat4
 8-chall8-a@a.a-flag5-cat4
 9-None-a@a.a-flag5-None
+1-Test-a@a.a-flag1-cat1
+1-Test-a@a.a-flag1-cat1
+1-Test-a@a.a-flag1-cat1
+9-Test-a@a.a-flag6-cat5

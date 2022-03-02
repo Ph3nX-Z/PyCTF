@@ -1,5 +1,41 @@
 <html>
-    Your Points : {{points}}
-    graph
-    <img src="/static/{{email}}.png" class="card-img-top" alt="...">
+    <body>
+        <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+    
+        </head>
+        <section class="horizontalbar">
+            <nav class="navbar navbar-dark bg-dark">
+                        
+                        <h1 class="navbar-brand"><img src="/static/logo3.png" width="30" height="30" class="d-inline-block align-top" alt="">PyCTF Dashboard</h1>
+                        <a href="/" class="nav-link">Home</a>
+                        <a href="/user/" class="nav-link">Stats</a>
+                        <a href="/instances/" class="nav-link" >Instances</a>
+                        <span>
+                            <a href="/logout/" class="btn btn-info btn-lg logout">Log out</a>
+                        </span>
+        </section>
+        <section class="body">
+            <h1>Stats :</h1>
+            Your Total Points : {{points}}
+            Your Grade : 
+            <h1>Graph :</h1>
+            <img src="/static/{{email}}.png" class="" alt="...">
+            <h1>Submit a Flag :</h1>
+            <p>1. Chall1</p>
+            <p>9. Test</p>
+            <form method="POST" class="the-form">
+                <label>ID :</label>
+                <input type="id" name="id" id="id" placeholder="Enter your chall number">
+                <label>Flag :</label>
+                <input type="flag" name="flag" id="flag" placeholder="Enter your flag">
+
+                <input type="submit" value="Submit Flag">
+
+            </form>
+        </section>
+    </body>
 </html>

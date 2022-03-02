@@ -1,5 +1,5 @@
 import random
-from users import *
+from libs.users import *
 
 global all_cookies 
 all_cookies = {}
@@ -56,6 +56,7 @@ def get_name(chall_id):
         for i in file.read().split("\n"):
             if chall_id in i:
                 return i.split("-")[1]
+
 
 def submit_flag(email,flag,chall_id):
     nom = get_name(chall_id)

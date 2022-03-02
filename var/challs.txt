@@ -6,3 +6,4 @@
 6-chall6-cat4-flag5
 7-chall7-cat4-flag5
 8-chall8-cat4-flag5
+9-Test-cat5-flag6

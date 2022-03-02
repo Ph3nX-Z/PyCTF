@@ -71,13 +71,6 @@ def register():
         return render_template("register.html")
 
 
-@app.route('/user/')
-def user():
-    if request.cookies.get("user"):
-        if get_email_cookie(request.cookies.get("user")):
-            user = get_email_cookie(request.cookies.get("user"))
-            return user
-    return redirect("/login/", code=302)
 
 @app.route('/instances/', methods=["POST","GET"])
 def instances():
@@ -110,7 +103,7 @@ def instances():
                     return redirect("/instances/", code=302)
     return redirect("/login/", code=302)
 
-@app.route("/submit/", methods=["POST","GET"])
+@app.route("/user/", methods=["POST","GET"])
 def submit():
     if request.cookies.get("user"):
         if get_email_cookie(request.cookies.get("user")):
@@ -131,7 +124,7 @@ def submit():
                 flag = request.values.get("flag")
                 submit_flag(email,flag,id)
                 refresh_points(email)
-                return redirect("/submit/", code=302)
+                return redirect("/user/", code=302)
     return redirect("/login/", code=302)
 
 @app.route("/logout/")
