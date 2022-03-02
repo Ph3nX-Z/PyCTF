@@ -3,7 +3,7 @@ from math import pi
 import matplotlib.pyplot as plt
 import os
 import random
-import multiprocessing
+from multiprocessing import Process
 
 
 
@@ -57,5 +57,7 @@ def generate_graph(dico,email):
     plt.clf()
 
 
-if __name__=="__main__":
-    pass
+def main_graph(dico,email):
+    p = Process(target=generate_graph, args=(dico,email,))
+    p.start()
+    p.join()

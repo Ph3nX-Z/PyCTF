@@ -120,7 +120,7 @@ def submit():
                 user.import_user(email)
                 points = user.points
                 cat = get_cat_for_email(email)
-                generate_graph(cat, email)
+                main_graph(cat, email)
                 with open("./var/challs.txt","r") as file:
                     challs = file.read().split("\n")
                 challs = [f"{i.split('-')[0]} {i.split('-')[1]} {i.split('-')[3]}" for i in challs]
@@ -142,4 +142,4 @@ def logout():
 
 #app.logger.disabled = True
 app.run(port=80,threaded=True,host="0.0.0.0")
-execute_cmd("docker system prune -a")
+execute_cmd("docker system prune -af")
