@@ -10,6 +10,11 @@ import datetime
 global start_time 
 start_time = time.time()
 
+try:
+    create_docker_network()
+except:
+    pass
+
 app = Flask(__name__)
 @app.route('/')
 def index():
@@ -94,6 +99,9 @@ def instances():
                 except:
                     return redirect("/home/", code=302)
             else:
+                if "delete_instance" in request.form:
+                    delete_container(get_id_by_image(request.form.get('delete_instance')),request.form.get('delete_instance'))
+                    return redirect("/instances/", code=302)
                 name = request.form.get("auto")
                 email = get_email_cookie(request.cookies.get("user"))
                 if deploy_instance_user(name,email):
@@ -134,3 +142,4 @@ def logout():
 
 #app.logger.disabled = True
 app.run(port=80,threaded=True,host="0.0.0.0")
+execute_cmd("docker system prune -a")

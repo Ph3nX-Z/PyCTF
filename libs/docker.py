@@ -6,6 +6,16 @@ import _thread
 def execute_cmd(cmd):
     return "".join(list(os.popen(cmd)))
 
+
+def get_id_by_image(image):
+    out = execute_cmd("docker container ps -a")
+    final = ""
+    for i in out.split("\n")[1:]:
+        if image in i:
+            final = i
+    final = final.replace("   "," ").split()
+    return final[0]
+
 def get_ip_by_id(id):
     out = execute_cmd("docker container ps -a")
     final = ""
@@ -48,7 +58,7 @@ def delete_all():
         file.write("")
     return execute_cmd('docker system prune -a --force')
 
-def delete_container(id):
+def delete_container(id,image):
     try:
         execute_cmd(f"docker stop {id}")
     except:
@@ -61,10 +71,10 @@ def delete_container(id):
     with open("./instances/instances.all",'r') as file:
         data = file.read().split("\n")
         for line in data:
-            if id not in line:
+            if image not in line:
                 towrite.append(line)
     with open("./instances/instances.all","w") as file:
-        file.write(towrite)
+        file.write("\n".join(towrite))
         
 
 def deploy_instance_user(docker_id,email):
