@@ -6,6 +6,7 @@ from libs.docker import *
 from libs.graphs import *
 import time
 import datetime
+import glob
 
 global start_time 
 start_time = time.time()
@@ -93,7 +94,7 @@ def instances():
                         ip=None
                     return render_template("instances.html",instances=liste_active_instances,ip=ip)
                 except:
-                    return redirect("/home/", code=302)
+                    return redirect("/", code=302)
             else:
                 email = get_email_cookie(request.cookies.get("user"))
                 if "delete_instance" in request.form:
@@ -125,6 +126,7 @@ def submit():
                 user.import_user(email)
                 points = user.points
                 cat = get_cat_for_email(email)
+                challs_done = get_challs_for_email(email)
                 main_graph(cat, email)
                 liste_chall = {}
                 with open("./var/challs.txt","r") as file:
@@ -132,7 +134,14 @@ def submit():
                 for i in challs:
                     i=i.split("-")
                     liste_chall[i[0]] = [i[1],i[2]]
-                return render_template("submit_flag.html",points=points,email=email,liste_chall = liste_chall)
+                
+                rank_points = {"B0t":0,"N00b1e":40,"W1z4rd":60,"M4st3r":100,"Bug Hunt3r":150,"H4x0r":200}
+                for i in range(len(list(rank_points.values())[::-1])):
+                    if int(points) >= int(list(rank_points.values())[::-1][i]):
+                        rank = str(list(rank_points.keys())[::-1][i])
+                        break
+
+                return render_template("submit_flag.html",points=points,email=email,liste_chall = liste_chall,challs_done=", ".join(challs_done),rank=rank)
             else:
                 email = get_email_cookie(request.cookies.get("user"))
                 id = request.values.get("id")
@@ -147,6 +156,16 @@ def logout():
     resp = make_response(redirect("/", code=302))
     resp.delete_cookie('user')
     return resp
+
+@app.route("/scoreboard/")
+def score():
+    users = []
+    for i in glob.glob("./users/*"):
+        user1 = User()
+        user1.import_user(".".join(i.split("/")[-1].split(".")[:-1]))
+        users.append([user1.pseudo,user1.points])
+    sorted = scoreboard_sort(users)
+    return render_template("scoreboard.html",users=sorted,long=len(sorted))
 
 #app.logger.disabled = True
 app.run(port=80,threaded=True,host="0.0.0.0")

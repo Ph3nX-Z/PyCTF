@@ -2,7 +2,7 @@
     color:white;
 }
 html {
-    background-color: #f4f0ec;
+    background-color: #ffffff;
     font-family: 'Roboto', sans-serif;
 }
 .horizontalbar :last-child {
@@ -32,6 +32,19 @@ html {
     height: 100%;
     padding-left: 15%;
     padding-right: 15%;
-    background-color: #f4f0ec;
+    background-color: #ffffff;
     color:#343a40!important;
+    padding-top: 5%;
+}
+.bann {
+    padding-left: 15%;
+    padding-right: 15%;
+    text-align: center;
+    padding-top: 11%;
+    padding-bottom: 11%;
+    background-image: url("../static/back2.gif");
+}
+.bann h1 {
+    font-size: 9em;
+    color:white;
 }

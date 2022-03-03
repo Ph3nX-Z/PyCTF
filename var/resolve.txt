@@ -259,3 +259,8 @@
 9-Test-test@test.test-flag6-cat5
 6-chall6-test@test.test-flag5-cat4
 10-Chall10-a@a.a-AAA-Forensic
+11-Chall11-a@a.a-AAA-Forensic
+12-Chall12-a@a.a-AAA-Forensic
+13-Chall13-a@a.a-AAA-Forensic
+14-Chall14-a@a.a-AAA-Forensic
+15-Chall15-a@a.a-AAA-Forensic

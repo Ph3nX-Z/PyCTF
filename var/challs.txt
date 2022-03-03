@@ -8,3 +8,8 @@
 8-chall8-cat4-flag5
 9-Test-cat5-flag6
 10-Chall10-Forensic-AAA
+11-Chall11-Forensic-AAA
+12-Chall12-Forensic-AAA
+13-Chall13-Forensic-AAA
+14-Chall14-Forensic-AAA
+15-Chall15-Forensic-AAA

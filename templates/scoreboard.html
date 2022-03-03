@@ -20,56 +20,28 @@
                         </span>
         </section>
         <section class="bann">
-            <h1>User Statistics</h1>
+            <h1>Scoreboard</h1>
         </section>
         <section class="body">
-            <div class="div_stats">
-                <label class="label_mar">
-                    <hr/>
-                    <h4>Points : {{points}}</h4>
-                    <hr/>
-                    <h4>Rank : {{rank}}</h4>
-                    <hr/>
-                </label>
-                <img src="/static/{{email}}.png" class="" alt="...">
-            </div>
-            <h2>All the challenges :</h2>
+            <h2>All the Users :</h2>
             <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
+                    <th scope="col">Nickname</th>
+                    <th scope="col">Points</th>
                   </tr>
                 </thead>
                 <tbody>
-                    {%for i in liste_chall.keys()%}
+                    {%for i in range(1,long+1)%}
                     <tr>
                         <th scope="row">{{i}}</th>
-                        <td>{{liste_chall[i][0]}}</td>
-                        <td>{{liste_chall[i][1]}}</td>
+                        <td>{{users[i-1][0]}}</td>
+                        <td>{{users[i-1][1]}}</td>
                     </tr>
                     {%endfor%}
                 </tbody>
             </table>
-            <hr/>
-            <p><b>You did :</b> {{challs_done}}</p>
-            <hr/>
-            <h2>Submit a flag :</h2>
-            <form method="POST" class="the-form">
-                <div class="form-group">
-                    <label>ID :</label>
-                    <input class="form-control" type="id" name="id" id="id" placeholder="ID">
-                    <small id="emailHelp" class="form-text text-muted">You may enter the chall number !</small>
-                </div>
-                <div class="form-group">
-                    <label>Flag :</label>
-                    <input class="form-control" type="password" name="flag" id="flag" placeholder="Enter your flag">
-                    <small id="emailHelp" class="form-text text-muted">Don't share your flags !</small>
-                </div>
-                <input class="btn btn-primary" type="submit" value="Submit Flag">
-
-            </form>
         </section>
     </body>
 </html>

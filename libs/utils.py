@@ -75,7 +75,29 @@ def refresh_points(email):
     user1.update_user()
     return "Done"
 
+def scoreboard_sort(users):
+    users_sorted = []
+    while len(users)!=0:
+        max_points = max([int(i[1]) for i in users])
+        for i in range(len(users)):
+            if users[i][1]==str(max_points):
+                users_sorted.append(users.pop(i))
+                break
+    return users_sorted
 
+def get_challs_for_email(email):
+    with open("./var/resolve.txt","r") as file:
+        resolves = file.read().split("\n") # challid - nom - email - flag - cat
+    with open("./var/challs.txt") as file:
+        challenges = file.read().split("\n")
+        chall_names = [i.split("-")[1] for i in challenges]
+    by_user = []
+    for i in resolves:
+        if email in i.split("-"):
+            if i.split("-")[1] in chall_names and i.split("-")[1] not in by_user:
+                by_user.append(i.split("-")[1])
+                
+    return by_user
 
 if __name__=="__main__":
     #create_files()
