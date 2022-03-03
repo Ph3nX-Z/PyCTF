@@ -25,6 +25,22 @@ rm -rf PyCTF
 sudo docker system prune -a (Optional)
 ```
 
+### Features to come :
+* External access to docker network
+* Optimisation of the website 
+* Loading of the images
+* Global Chat
+* Admin Panel
+
+### Features :
+* Users management
+* Instances Management
+* Points and ranks system
+* Scoreboard
+* Login/logout and register panel
+* Stats and personalized graphs
+* User Friendly interface
+
 
 ## Legal
 
