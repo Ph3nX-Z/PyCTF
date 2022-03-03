@@ -26,4 +26,25 @@ sudo docker system prune -a (Optional)
 ```
 
 
+## Legal
 
+Usefull Info:
+* Informations are only stored in your computer.
+* This project isn't GPDR compliant and must be used for personnal usage.
+
+## Project Info
+
+Back-End / Front-End / Code : [Ph3nX](https://github.com/Ph3nX-Z)
+
+Report a Bug : [Report](https://github.com/Ph3nX-Z/PyCTF/blob/main/.github/ISSUE_TEMPLATE/bug_report.md)
+
+## Supporters:
+[![](https://reporoster.com/stars/dark/ph3nx-Z/PyCTF)](https://github.com/Ph3nX-Z/PyCTF/stargazers)
+
+## Contributing
+
+1. Fork it (<https://github.com/yourname/yourproject/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
