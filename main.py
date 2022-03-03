@@ -10,6 +10,9 @@ import datetime
 global start_time 
 start_time = time.time()
 
+global user_deploy
+user_deploy = {}
+
 try:
     create_docker_network()
 except:
@@ -92,13 +95,22 @@ def instances():
                 except:
                     return redirect("/home/", code=302)
             else:
+                email = get_email_cookie(request.cookies.get("user"))
                 if "delete_instance" in request.form:
                     delete_container(get_id_by_image(request.form.get('delete_instance')),request.form.get('delete_instance'))
+                    user_deploy[email]=0
                     return redirect("/instances/", code=302)
-                name = request.form.get("auto")
-                email = get_email_cookie(request.cookies.get("user"))
-                if deploy_instance_user(name,email):
-                    return redirect("/instances/", code=302)
+                if not email in user_deploy.keys():
+                    user_deploy[email]=0
+                if user_deploy[email]!=1:
+                    name = request.form.get("auto")
+                    user_deploy[email]=1
+                    status = deploy_instance_user(name,email)
+                    if status:
+                        return redirect("/instances/", code=302)
+                    else:
+                        user_deploy[email]=0
+                        return redirect("/instances/", code=302)
                 else:
                     return redirect("/instances/", code=302)
     return redirect("/login/", code=302)
@@ -114,10 +126,13 @@ def submit():
                 points = user.points
                 cat = get_cat_for_email(email)
                 main_graph(cat, email)
+                liste_chall = {}
                 with open("./var/challs.txt","r") as file:
                     challs = file.read().split("\n")
-                challs = [f"{i.split('-')[0]} {i.split('-')[1]} {i.split('-')[3]}" for i in challs]
-                return render_template("submit_flag.html",challs_with_number = challs, points=points,email=email)
+                for i in challs:
+                    i=i.split("-")
+                    liste_chall[i[0]] = [i[1],i[2]]
+                return render_template("submit_flag.html",points=points,email=email,liste_chall = liste_chall)
             else:
                 email = get_email_cookie(request.cookies.get("user"))
                 id = request.values.get("id")

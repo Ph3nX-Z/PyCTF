@@ -3,6 +3,7 @@
 }
 html {
     background-color: #f4f0ec;
+    font-family: 'Roboto', sans-serif;
 }
 .horizontalbar :last-child {
     margin-right: 1em;
