@@ -41,7 +41,7 @@ def my_form():
             res.set_cookie('user', generate_cookie(40,email), expires=expire_date)
             return res
         else:
-            return redirect("/register/", code=302)
+            return redirect("/login/", code=302)
 
     else:
         return render_template("login.html")
@@ -52,6 +52,10 @@ def register():
         email = request.values.get("email")
         password = request.values.get("password")
         nickname = request.values.get("nickname")
+
+        if not email or not password or not nickname:
+            return redirect("/register/",code=302)
+
         if not os.path.isdir("./var/"):
             os.mkdir("./var")
         if not os.path.isfile("./var/id"):

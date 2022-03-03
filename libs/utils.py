@@ -88,13 +88,16 @@ def scoreboard_sort(users):
 def get_challs_for_email(email):
     with open("./var/resolve.txt","r") as file:
         resolves = file.read().split("\n") # challid - nom - email - flag - cat
+    chall_flags = {}
     with open("./var/challs.txt") as file:
         challenges = file.read().split("\n")
         chall_names = [i.split("-")[1] for i in challenges]
+        for i in challenges:
+            chall_flags[i.split("-")[1]] = i.split("-")[3]
     by_user = []
     for i in resolves:
         if email in i.split("-"):
-            if i.split("-")[1] in chall_names and i.split("-")[1] not in by_user:
+            if i.split("-")[1] in chall_names and i.split("-")[1] not in by_user and i.split("-")[3]==chall_flags[i.split("-")[1]]:
                 by_user.append(i.split("-")[1])
                 
     return by_user

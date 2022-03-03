@@ -3,13 +3,4 @@
 3-chall3-cat2-flag3
 4-chall4-cat3-flag4
 5-chall5-cat4-flag5
-6-chall6-cat4-flag5
-7-chall7-cat4-flag5
-8-chall8-cat4-flag5
-9-Test-cat5-flag6
-10-Chall10-Forensic-AAA
-11-Chall11-Forensic-AAA
-12-Chall12-Forensic-AAA
-13-Chall13-Forensic-AAA
-14-Chall14-Forensic-AAA
-15-Chall15-Forensic-AAA
+6-chall6-cat4-flag6
