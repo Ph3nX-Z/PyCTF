@@ -33,6 +33,7 @@ sudo docker system prune -a (Optional)
 * Loading of the images
 * Global Chat
 * Admin Panel
+* Port representation (ranges and unique)
 
 ### Features :
 * Users management
