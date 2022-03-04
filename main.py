@@ -171,6 +171,31 @@ def score():
     sorted = scoreboard_sort(users)
     return render_template("scoreboard.html",users=sorted,long=len(sorted))
 
+@app.route("/admin/")
+def admin():
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            users = {}
+            for i in glob.glob("./users/*"):
+                email = ".".join(i.split("/")[-1].split(".")[:-1])
+                user = User()
+                user.import_user(email)
+                users[user.email]=[user.id,user.pseudo,user.right,user.points]
+
+            if request.method=="GET":
+                email = get_email_cookie(request.cookies.get("user"))
+                user = User()
+                user.import_user(email)
+                if user.right == "admin":
+                    return render_template("admin.html",users=users)
+                else:
+                    return redirect("/", code=302)
+            else:
+                return render_template("admin.html",users=users)
+    return redirect("/login/", code=302)
+    
+
+
 #app.logger.disabled = True
 app.run(port=80,threaded=True,host="0.0.0.0")
 execute_cmd("docker system prune -af")
