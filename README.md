@@ -42,6 +42,7 @@ sudo docker system prune -a (Optional)
 * Login/logout and register panel
 * Stats and personalized graphs
 * User Friendly interface
+* Automatic network configuration
 
 ## Media
 
