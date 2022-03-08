@@ -50,6 +50,7 @@ sudo docker system prune -a (Optional)
 
 ### Stats
 
+![](./readme_img/stat.png)
 
 ### Scoreboard
 
