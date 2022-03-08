@@ -48,9 +48,16 @@ sudo docker system prune -a (Optional)
 ## Media
 
 
-### Stats
-![](./readme_img/stats1.png)
-![](./readme_img/stats2.png)
+### Stats
+
+
+### Scoreboard
+
+
+### Instances
+
+
+### Admin Panel
 
 ## Legal
 
