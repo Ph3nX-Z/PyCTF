@@ -62,6 +62,8 @@ sudo docker system prune -a (Optional)
 
 ### Admin Panel
 
+![](./readme_img/admin.png)
+
 ## Legal
 
 Usefull Info:
