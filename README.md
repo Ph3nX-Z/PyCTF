@@ -58,6 +58,7 @@ sudo docker system prune -a (Optional)
 
 ### Instances
 
+![](./readme_img/instances.png)
 
 ### Admin Panel
 
