@@ -3,7 +3,7 @@ Web Based CTF Platform, multithreaded and powered by python3
 
 VERSION : Beta 1.0
 
-![](./readme_img/home.png)
+![](./readme_img/index.png)
 
 ## Presentation
 
