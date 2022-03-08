@@ -54,6 +54,7 @@ sudo docker system prune -a (Optional)
 
 ### Scoreboard
 
+![](./readme_img/scoreboard.png)
 
 ### Instances
 
