@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, send_from_directory, make_response
+from flask import Flask, request, render_template, redirect, send_from_directory, make_response, send_file
 from webob import second
 from libs.users import *
 from libs.utils import *
@@ -194,6 +194,18 @@ def admin():
                 return render_template("admin.html",users=users)
     return redirect("/login/", code=302)
     
+@app.route("/download_config/", methods=["POST","GET"])
+def download_config():
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            email = get_email_cookie(request.cookies.get("user"))
+            user1 = User()
+            user1.import_user(email)
+            if "/root/"+str(user1.pseudo)+".ovpn" in glob.glob("/root/*.ovpn"):
+                return send_file(f'/root/{str(user1.pseudo)+".ovpn"}')
+    return redirect("/", code=302)
+
+
 
 
 #app.logger.disabled = True
