@@ -28,12 +28,9 @@ sudo docker system prune -a (Optional)
 ```
 
 ### Features to come :
-* External access to docker network
-* Optimisation of the website 
-* Loading of the images
 * Global Chat
-* Admin Panel
 * Port representation (ranges and unique)
+* Improve admin panel
 
 ### Features :
 * Users management
@@ -44,6 +41,9 @@ sudo docker system prune -a (Optional)
 * Stats and personalized graphs
 * User Friendly interface
 * Automatic network configuration
+* External access to docker network
+* Optimisation of the website 
+* Admin Panel
 
 ## Media
 
