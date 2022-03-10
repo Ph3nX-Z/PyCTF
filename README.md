@@ -19,6 +19,7 @@ PyCTF is a CTF platform that allows you to add challenges and deploy them dynami
 git clone [url]
 cd PyCTF
 python3 main.py
+(for the external access, you will have to setup an openvpn server)
 ```
 
 #### Uninstall
