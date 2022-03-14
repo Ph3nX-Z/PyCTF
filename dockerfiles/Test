@@ -1,8 +1,0 @@
-FROM ubuntu
-RUN export DEBIAN_FRONTEND=noninteractive
-RUN apt update
-RUN apt -yq upgrade
-RUN apt -yq install netcat-traditional
-RUN echo {{random}}
-EXPOSE 1234
-CMD ["nc","-nvlp","1234"]
