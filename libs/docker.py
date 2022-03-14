@@ -36,13 +36,14 @@ def exec_docker(id):
     execute_cmd(f"docker run --net network1 -it {id}")
 
 def docker_build(file):
-    with open(file,"r") as fich:
+    with open(f"{file}/Dockerfile","r") as fich:
         data = fich.read().replace("{{random}}",''.join([str(random.randint(0,9)) for i in range(100)]))
     filename = ''.join([str(random.randint(0,9)) for i in range(10)])
-    with open(filename,"w") as fich:
+    with open(f"{file}/"+filename,"w") as fich:
         fich.write(data)
-    out = execute_cmd(f"docker build - <{filename}")
-    os.remove(filename)
+    random_file = "./dockerfiles/"+''.join([str(random.randint(0,9)) for i in range(100)])
+    out = execute_cmd(f"cp -r {file} {random_file}/;cd {random_file}/;rm Dockerfile;mv {filename} Dockerfile;docker build .;cd ../..;rm -rf {random_file}")
+    os.remove(f"{file}/"+filename)
     for i in out.split("\n"):
         if "Successfully built" in i:
             try:
@@ -78,7 +79,10 @@ def delete_container(id,image):
         
 
 def deploy_instance_user(docker_id,email):
-    docker_name = [None,"Test"][int(docker_id)]
+    with open("./var/challs.txt","r") as file:
+        data = file.read().split("\n")
+        names = [i.split("-")[1] for i in data]
+    docker_name = names[int(docker_id)-1]
     if not os.path.isdir("./instances/"):
         os.mkdir("./instances/")
     if not os.path.isfile("./instances/instances.all"):

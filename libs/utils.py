@@ -26,8 +26,9 @@ def create_files():
 def get_cat(chall_id):
     with open("./var/challs.txt","r") as file:
         for i in file.read().split("\n"):
-            if chall_id in i.split("-"):
-                return i.split("-")[2] # challid - nom - cat - flag
+            if i!="":
+                if chall_id in i.split("-"):
+                    return i.split("-")[2] # challid - nom - cat - flag
     return "None"
 
 def get_cat_for_email(email):
@@ -54,8 +55,9 @@ def get_cat_for_email(email):
 def get_name(chall_id):
     with open("./var/challs.txt",'r') as file:
         for i in file.read().split("\n"):
-            if chall_id in i:
-                return i.split("-")[1]
+            if i!="":
+                if chall_id in i:
+                    return i.split("-")[1]
 
 
 def submit_flag(email,flag,chall_id):
@@ -91,9 +93,10 @@ def get_challs_for_email(email):
     chall_flags = {}
     with open("./var/challs.txt") as file:
         challenges = file.read().split("\n")
-        chall_names = [i.split("-")[1] for i in challenges]
+        chall_names = [i.split("-")[1] for i in challenges if i!=""]
         for i in challenges:
-            chall_flags[i.split("-")[1]] = i.split("-")[3]
+            if i!="":
+                chall_flags[i.split("-")[1]] = i.split("-")[3]
     by_user = []
     for i in resolves:
         if email in i.split("-"):
