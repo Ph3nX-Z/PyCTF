@@ -26,6 +26,7 @@ def index():
     seconds = int(time.time()) - start_time
     minutes = seconds//60
     hours = seconds//3600
+    minutes-=hours*60
     return render_template("index.html",hour=int(hours),minute=int(minutes))
 
 @app.route('/login/', methods=["POST","GET"])
@@ -136,8 +137,9 @@ def submit():
                 with open("./var/challs.txt","r") as file:
                     challs = file.read().split("\n")
                 for i in challs:
-                    i=i.split("-")
-                    liste_chall[i[0]] = [i[1],i[2]]
+                    if i!="":
+                        i=i.split("-")
+                        liste_chall[i[0]] = [i[1],i[2]]
                 
                 rank_points = {"B0t":0,"N00b1e":40,"W1z4rd":60,"M4st3r":100,"Bug Hunt3r":150,"H4x0r":200}
                 for i in range(len(list(rank_points.values())[::-1])):
