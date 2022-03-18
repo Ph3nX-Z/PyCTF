@@ -1,7 +1,7 @@
 # PyCTF
 Web Based CTF Platform, multithreaded and powered by python3
 
-Contact me to get the hosted version of the project.
+Hosted Version : https://pyctf.fr/
 
 VERSION : Beta 1.0
 
