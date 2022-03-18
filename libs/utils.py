@@ -56,7 +56,7 @@ def get_name(chall_id):
     with open("./var/challs.txt",'r') as file:
         for i in file.read().split("\n"):
             if i!="":
-                if chall_id in i:
+                if chall_id == i.split("-")[0]:
                     return i.split("-")[1]
 
 
