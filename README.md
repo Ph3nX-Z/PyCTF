@@ -20,9 +20,24 @@ PyCTF is a CTF platform that allows you to add challenges and deploy them dynami
 ```sh
 git clone [url]
 cd PyCTF
-python3 main.py
+sudo python3 main.py
 (for the external access, you will have to setup an openvpn server)
 ```
+You will have to run the app in screen if you want to deploy it in production:
+```sh
+sudo apt install screen
+screen 
+sudo python3 main.py
+Ctrl-A
+Ctrl-D
+screen -r (to get back into the screen session)
+```
+
+#### Add Challenges
+* Add a folder containing the challenge, with the dockerfile (in which you'put one echo {{random}} to detach every docker id).
+* Add a challenge with a category, an id and a flag in ./var/challs.txt
+* Add the challenge in ./templates/instances.html
+There are no needs to restart the app, it will be reloaded automatically
 
 #### Uninstall
 ```sh
