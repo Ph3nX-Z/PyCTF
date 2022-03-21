@@ -34,7 +34,7 @@ screen -r (to get back into the screen session)
 ```
 
 #### Add Challenges
-* Add a folder containing the challenge, with the dockerfile (in which you'put one echo {{random}} to detach every docker id).
+* Add a folder containing the challenge, with the dockerfile (in which you'll put one echo {{random}} to detach every docker id).
 * Add a challenge with a category, an id and a flag in ./var/challs.txt
 * Add the challenge in ./templates/instances.html
 There are no needs to restart the app, it will be reloaded automatically
