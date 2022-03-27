@@ -54,6 +54,7 @@ sudo docker system prune -a (Optional)
 * Instances Management
 * Points and ranks system
 * Scoreboard
+* Email verification
 * Login/logout and register panel
 * Stats and personalized graphs
 * User Friendly interface
