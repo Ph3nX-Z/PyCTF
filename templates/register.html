@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style-with-prefix2.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style-with-prefix.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Roboto:wght@100;300&display=swap" rel="stylesheet"> 
     <style>
         .srouce{
@@ -30,8 +30,8 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="Enter your password">
 
-                    <label for="nickname">Nickname</label>
-                    <input type="nickname" name="nickname" id="nickname" placeholder="Enter your nickname">
+                    <label>Nickname</label>
+                    <input type="text" name="nickname" class="form-control" id="formGroupExampleInput2" placeholder="Enter your nickname">
 
                     <input type="submit" value="Sign In">
 
