@@ -1,9 +1,12 @@
+from ipaddress import ip_address
+from cv2 import _INPUT_ARRAY_CUDA_HOST_MEM
 from flask import Flask, request, render_template, redirect, send_from_directory, make_response, send_file
 from webob import second
 from libs.users import *
 from libs.utils import *
 from libs.docker import *
 from libs.graphs import *
+from libs.verification import *
 import time
 import datetime
 import glob
@@ -13,6 +16,9 @@ start_time = time.time()
 
 global user_deploy
 user_deploy = {}
+
+global code_ip
+code_ip = {}
 
 try:
     create_docker_network()
@@ -79,12 +85,35 @@ def register():
     else:
         return render_template("register.html")
 
+@app.route('/verify/', methods=["POST","GET"])
+def verify():
+    global code_ip
+    create_or_check()
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            if not is_verified(get_email_cookie(request.cookies.get("user"))):
+                if request.method=="GET":
+                    codee = gen_and_send(get_email_cookie(request.cookies.get("user")))
+                    code_ip[request.remote_addr] = codee
+                    return render_template("verify.html")
+                else:
+                    if not request.remote_addr in code_ip.keys():
+                        return redirect('/verify/',code=302)
+                    code_from_page = request.values.get("verify")
+                    #print(codee,code_from_page)
+                    if code_ip[request.remote_addr]==code_from_page:
+                        set_as_verified(get_email_cookie(request.cookies.get("user")))
+                    else:
+                        return render_template("verify.html")
 
+    return redirect("/user/",code=302)
 
 @app.route('/instances/', methods=["POST","GET"])
 def instances():
     if request.cookies.get("user"):
         if get_email_cookie(request.cookies.get("user")):
+            if not is_verified(get_email_cookie(request.cookies.get("user"))):
+                return redirect("/verify/",code=302)
             if request.method=="GET":
                 email = get_email_cookie(request.cookies.get("user"))
                 try:
@@ -125,6 +154,8 @@ def instances():
 def submit():
     if request.cookies.get("user"):
         if get_email_cookie(request.cookies.get("user")):
+            if not is_verified(get_email_cookie(request.cookies.get("user"))):
+                return redirect("/verify/",code=302)
             if request.method=="GET":
                 user = User()
                 email = get_email_cookie(request.cookies.get("user"))
