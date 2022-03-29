@@ -1,33 +1,33 @@
-import smtplib, ssl
 import random
 import json
 import glob
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-def gen_and_send(email):
+def gen_and_send(email_from):
 
     verif_code = "".join([str(random.randint(0,9)) for i in range(6)])
 
-    port = 587  # For starttls
-    smtp_server = "smtp.gmail.com"
-    sender_email = "bot.pyctf@gmail.com"
-    receiver_email = f"{email}"
-    password = ""
-    message = f"""\
-    Subject: PyCTF verification
-
-    Here is your verification code :{verif_code}"""
-
-    context = ssl.create_default_context()
-    with smtplib.SMTP(smtp_server, port) as server:
-        server.ehlo()  # Can be omitted
-        server.starttls(context=context)
-        server.ehlo()  # Can be omitted
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message)
-
+    sender = "bot.pyctf@gmail.com"
+    receiver = email_from
+    port_number =587
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = receiver
+    msg['Subject'] = 'PYCTF Verification'
+    message = f'Here is your verification code :{verif_code}'
+    msg.attach(MIMEText(message))
+    mailserver = smtplib.SMTP('smtp.gmail.com',port_number)
+    mailserver.connect('smtp.gmail.com',port_number)
+    mailserver.ehlo()
+    mailserver.starttls()
+    mailserver.ehlo()
+    mailserver.login(sender, "") # put the code here for your smtp
+    mailserver.sendmail(sender,receiver,msg.as_string())
+    mailserver.quit()
     return verif_code
-
 
 
 def create_or_check():
