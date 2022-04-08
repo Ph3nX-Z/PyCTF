@@ -48,11 +48,12 @@ sudo docker system prune -a (Optional)
 ### Features to come :
 * Global Chat
 * Improve admin panel
+* Add variable points for every challenges
 
 ### Features :
 * Users management
 * Instances Management
-* Points and ranks system
+* Points and ranking system
 * Scoreboard
 * Email verification
 * Login/logout and register panel
