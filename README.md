@@ -48,7 +48,7 @@ sudo docker system prune -a (Optional)
 ### Features to come :
 * Non privileged user Automation (to run the server as user)
 * Automation of openvpn profiles
-* Improvements on the admin panel
+* Improvements on the admin panel (add/remove challs, remove users, reboot server, delete all non verified users) 
 
 ### Features :
 * Users management
