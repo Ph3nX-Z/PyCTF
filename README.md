@@ -46,9 +46,9 @@ sudo docker system prune -a (Optional)
 ```
 
 ### Features to come :
-* Global Chat
-* Improve admin panel (ban, add chall, remove/add users, reboot server, refresh files and code, grant/remove role, manage points)
-* Add variable points for every challenges
+* Non privileged user Automation (to run the server as user)
+* Automation of openvpn profiles
+* Improvements on the admin panel
 
 ### Features :
 * Users management
