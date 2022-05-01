@@ -49,7 +49,6 @@ sudo docker system prune -a (Optional)
 * Global Chat
 * Improve admin panel (ban, add chall, remove/add users, reboot server, refresh files and code, grant/remove role, manage points)
 * Add variable points for every challenges
-* IP Ban
 
 ### Features :
 * Users management
@@ -65,6 +64,7 @@ sudo docker system prune -a (Optional)
 * Optimisation of the website 
 * Admin Panel
 * Port representation (ranges and unique)
+* IP Ban
 
 ## Media
 
