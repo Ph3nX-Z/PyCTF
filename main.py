@@ -1,7 +1,4 @@
-from ipaddress import ip_address
-from cv2 import _INPUT_ARRAY_CUDA_HOST_MEM
 from flask import Flask, request, render_template, redirect, send_from_directory, make_response, send_file
-from webob import second
 from libs.users import *
 from libs.utils import *
 from libs.docker import *
@@ -20,6 +17,13 @@ user_deploy = {}
 global code_ip
 code_ip = {}
 
+global banned_ips
+try:
+    with open("./var/banned_ips.txt",'r') as file:
+        banned_ips = file.read().split("\n")
+except FileNotFoundError:
+    banned_ips = []
+
 try:
     create_docker_network()
 except:
@@ -37,19 +41,22 @@ def index():
 
 @app.route('/login/', methods=["POST","GET"])
 def my_form():
+    global banned_ips
     if request.method=="POST":
         email = request.values.get("email")
         password = request.values.get("password")
         user = User()
-        if user.check_pass(password,email):
-            expire_date = datetime.datetime.now()
-            expire_date = expire_date + datetime.timedelta(hours=1)
-            res = make_response(redirect("/user", code=302))
-            res.set_cookie('user', generate_cookie(40,email), expires=expire_date)
-            return res
+        if request.remote_addr not in banned_ips:
+            if user.check_pass(password,email):
+                expire_date = datetime.datetime.now()
+                expire_date = expire_date + datetime.timedelta(hours=1)
+                res = make_response(redirect("/user", code=302))
+                res.set_cookie('user', generate_cookie(40,email), expires=expire_date)
+                return res
+            else:
+                return redirect("/login/", code=302)
         else:
-            return redirect("/login/", code=302)
-
+            return render_template("banned.html")
     else:
         return render_template("login.html")
 
