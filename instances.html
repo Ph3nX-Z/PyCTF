@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Roboto:wght@100;300&display=swap" rel="stylesheet"> 
+
+    </head>
+
+    <body>
+
+
+        <section class="horizontalbar">
+            <nav class="navbar navbar-dark bg-dark">
+                        
+                        <h1 class="navbar-brand"><img src="/static/logo3.png" width="30" height="30" class="d-inline-block align-top" alt="">PyCTF Dashboard</h1>
+                        <a href="/" class="nav-link">Home</a>
+                        <a href="/user/" class="nav-link">Stats</a>
+                        <a href="/instances/" class="nav-link" >Instances</a>
+                        <span>
+                            <a href="/logout/" class="btn btn-info btn-lg logout">Log out</a>
+                        </span>
+        </section>
+        <section class="bann">
+            <h1>Instances</h1>
+        </section>
+        <section class="main">
+            <h1>Deploy an instance</h1>
+            <a href="/download_config/">Download your configuration file (openvpn)</a>
+            <form method="POST">
+              <select class="custom-select" name="auto">
+                <option value="0" selected>Open this select menu</option>
+                <option value="1">Test</option>
+                <option value="2">Botnet Flooder</option>
+              </select>
+              <small class="form-text text-muted">Choose one instance to start</small>
+              <button type="submit" name="custom" class="btn btn-outline-secondary btn-lg btn-block">Start</button>
+            <!--<h1 style="text-align: center;font-size: 7em;height: 30%;padding-top: 15%;padding-bottom: 20%;">All Docker Instances</h1>-->
+            <h1 style="margin-top: 2%;">Active Instance :</h1>
+            <div class="container" style="margin-left: 15%;">
+            {%for instance in instances%}
+            <div class="card col-sm" style="width: 80%;">
+                <img src="/static/docker.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Challenge Instance</h5>
+                  <p class="card-text">Instance ID may serve to delete the container.</p>
+                  <p><b>Instance : {{ip}}</b></p>
+                  <p><b>Port num : *</b></p>
+                  <h2>Delete :</h2>
+                  <input type="submit" name="delete_instance" value={{instance}}>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            {%endfor%}
+            </div>
+
+            </form>
+        </section>
+        
+    </body>
+</html>
