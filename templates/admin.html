@@ -23,6 +23,16 @@
             <h1>Admin Panel</h1>
         </section>
         <section class="body">
+            {%if error%}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+            {%endif%}
+            {%if success%}
+            <div class="alert alert-success" role="alert">
+                {{success}}
+            </div>
+            {%endif%}
             <h2>All the Users :</h2>
             <table class="table">
                 <thead>
@@ -42,10 +52,21 @@
                         <td>{{i}}</td>
                         <td>{{users[i][2]}}</td>
                         <td>{{users[i][3]}}</td>
+                        <button class="btn btn-default btn-xs pull-right remove-item"></button>
                     </tr>
                     {%endfor%}
                 </tbody>
             </table>
+            <h2>Delete a user :</h2>
+            <form method="POST" class="the-form">
+                <div class="form-group">
+                    <label>User Email :</label>
+                    <input class="form-control" type="id" name="id" id="id" placeholder="User Email">
+                    <small id="emailHelp" class="form-text text-muted">You may enter the user Email !</small>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Delete the user">
+
+            </form>
         </section>
     </body>
 </html>
