@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&family=Roboto:wght@100;300&display=swap" rel="stylesheet"> 
+
+    </head>
+
+    <body>
+        <section class="horizontalbar">
+            <nav class="navbar navbar-dark bg-dark">
+                        
+                        <h1 class="navbar-brand"><img src="/static/logo3.png" width="30" height="30" class="d-inline-block align-top" alt="">PyCTF Dashboard</h1>
+                        <a href="/" class="nav-link">Home</a>
+                        <a href="/user/" class="nav-link">Stats</a>
+                        <a href="/instances/" class="nav-link" >Instances</a>
+                        <span>
+                            <a href="/logout/" class="btn btn-info btn-lg logout">Log out</a>
+                        </span>
+        </section>
+        <section class="bann">
+            <h1>Admin Panel</h1>
+        </section>
+        <section class="body">
+            <div class="list-group">
+                <a href="/admin/users/" class="list-group-item list-group-item-action">User management</a>
+                <a href="/admin/challs/" class="list-group-item list-group-item-action">Challenges management</a>
+                <a href="/admin/banned/" class="list-group-item list-group-item-action">Banned ips management</a>
+              </div>
+        </section>
+    </body>
+</html>
