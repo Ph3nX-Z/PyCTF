@@ -17,13 +17,6 @@ user_deploy = {}
 global code_ip
 code_ip = {}
 
-global banned_ips
-try:
-    with open("./var/banned_ips.txt",'r') as file:
-        banned_ips = file.read().split("\n")
-except FileNotFoundError:
-    banned_ips = []
-
 try:
     create_docker_network()
 except:
@@ -41,12 +34,11 @@ def index():
 
 @app.route('/login/', methods=["POST","GET"])
 def my_form():
-    global banned_ips
     if request.method=="POST":
         email = request.values.get("email")
         password = request.values.get("password")
         user = User()
-        if request.remote_addr not in banned_ips:
+        if request.remote_addr not in get_ip_banned():
             if user.check_pass(password,email):
                 expire_date = datetime.datetime.now()
                 expire_date = expire_date + datetime.timedelta(hours=1)
@@ -211,7 +203,7 @@ def score():
     sorted = scoreboard_sort(users)
     return render_template("scoreboard.html",users=sorted,long=len(sorted))
 
-@app.route("/admin/")
+@app.route("/admin/", methods=["POST","GET"])
 def admin():
     if request.cookies.get("user"):
         if get_email_cookie(request.cookies.get("user")):
@@ -230,10 +222,20 @@ def admin():
                     return render_template("admin.html",users=users)
                 else:
                     return redirect("/", code=302)
-            else:
-                return render_template("admin.html",users=users)
+            elif request.method=="POST":
+                email_delete = request.values.get("id")
+                user1 = User()
+                try:
+                    user1.destroy_entry(email_delete)
+                except:
+                    return render_template("admin.html",users=users, error="Non-existent user !")
+                return render_template("admin.html",users=users, success="Success, refresh the page to see the changes.")
     return redirect("/login/", code=302)
-    
+
+@app.route("/admin/banned/")
+def banned():
+    return "Banned Panel"
+
 @app.route("/download_config/", methods=["POST","GET"])
 def download_config():
     if request.cookies.get("user"):
