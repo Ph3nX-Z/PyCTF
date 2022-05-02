@@ -105,6 +105,15 @@ def get_challs_for_email(email):
                 
     return by_user
 
+def get_ip_banned():
+    try:
+        with open("./var/banned_ips.txt",'r') as file:
+            banned_ips = file.read().split("\n")
+    except FileNotFoundError:
+        banned_ips = []
+    return banned_ips
+
+
 if __name__=="__main__":
     #create_files()
     submit_flag("a@a.a","flag1","1")

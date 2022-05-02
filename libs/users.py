@@ -76,10 +76,7 @@ class User:
 
     def destroy_entry(self,email):
         if os.path.isfile(f"./users/{email}.xml"):
-            if input(f"Do you really want to delete ./users/{email}.xml ? y/n :").lower()=="y":
-                os.remove(f"./users/{email}.xml")
-            else:
-                print("[-] Cancelled By user")
+            os.remove(f"./users/{email}.xml")
         else:
             raise ValueError("[-] Email not registered !")
 
