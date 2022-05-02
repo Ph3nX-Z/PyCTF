@@ -203,7 +203,7 @@ def score():
     sorted = scoreboard_sort(users)
     return render_template("scoreboard.html",users=sorted,long=len(sorted))
 
-@app.route("/admin/", methods=["POST","GET"])
+@app.route("/admin/users/", methods=["POST","GET"])
 def admin():
     if request.cookies.get("user"):
         if get_email_cookie(request.cookies.get("user")):
@@ -239,7 +239,46 @@ def admin():
 
 @app.route("/admin/banned/")
 def banned():
-    return "Banned Panel"
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            email = get_email_cookie(request.cookies.get("user"))
+            user = User()
+            user.import_user(email)
+            if user.right == "admin":
+                with open("./var/banned_ips.txt",'r') as file:
+                    ips = file.read().split("\n")
+                    ips = {i:ips[i] for i in range(len(ips)) if ips[i]!=""}
+                return render_template("admin-banned.html",ips=ips)
+            else:
+                return redirect("/",code=302)
+    return redirect("/login/", code=302)
+
+@app.route("/admin/")
+def admin_panel():
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            email = get_email_cookie(request.cookies.get("user"))
+            user = User()
+            user.import_user(email)
+            if user.right == "admin":
+                return render_template("admin-index.html")
+            else:
+                return redirect("/",code=302)
+    return redirect("/login/", code=302)
+    
+
+@app.route('/admin/challs/')
+def challs_manag():
+    if request.cookies.get("user"):
+        if get_email_cookie(request.cookies.get("user")):
+            email = get_email_cookie(request.cookies.get("user"))
+            user = User()
+            user.import_user(email)
+            if user.right == "admin":
+                return "challs management"
+            else:
+                return redirect("/",code=302)
+    return redirect("/login/", code=302)
 
 @app.route("/download_config/", methods=["POST","GET"])
 def download_config():
