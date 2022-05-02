@@ -223,6 +223,11 @@ def admin():
                 else:
                     return redirect("/", code=302)
             elif request.method=="POST":
+                email = get_email_cookie(request.cookies.get("user"))
+                user = User()
+                user.import_user(email)
+                if user.right != "admin":
+                    return redirect("/", code=302)
                 email_delete = request.values.get("id")
                 user1 = User()
                 try:
