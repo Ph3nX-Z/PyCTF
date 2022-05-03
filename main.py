@@ -237,20 +237,53 @@ def admin():
                 return render_template("admin.html",users=users, success="Success, refresh the page to see the changes.")
     return redirect("/login/", code=302)
 
-@app.route("/admin/banned/")
+@app.route("/admin/banned/", methods=["POST","GET"])
 def banned():
+    success = ""
     if request.cookies.get("user"):
         if get_email_cookie(request.cookies.get("user")):
             email = get_email_cookie(request.cookies.get("user"))
             user = User()
             user.import_user(email)
-            if user.right == "admin":
-                with open("./var/banned_ips.txt",'r') as file:
-                    ips = file.read().split("\n")
-                    ips = {i:ips[i] for i in range(len(ips)) if ips[i]!=""}
-                return render_template("admin-banned.html",ips=ips)
-            else:
-                return redirect("/",code=302)
+            if request.method == "GET":
+                if user.right == "admin":
+                    with open("./var/banned_ips.txt",'r') as file:
+                        ips = file.read().split("\n")
+                        ips = {i:ips[i] for i in range(len(ips)) if ips[i]!=""}
+                    return render_template("admin-banned.html",ips=ips)
+                else:
+                    return redirect("/",code=302)
+            elif request.method=="POST":
+                if user.right == "admin":
+                    ip = request.values.get("id")
+                    if request.form['sub_but'] == 'Delete':
+                        with open("./var/banned_ips.txt",'r') as file:
+                            data = [i for i in file.read().split("\n") if i!=""]
+                        with open("./var/banned_ips.txt",'w') as file:
+                            try:
+                                success = str(data.pop(data.index(ip)))+" Has been removed."
+                            except:
+                                error = "Non-existent ip !"
+                            file.write("\n".join(data))
+                    elif request.form['sub_but'] == 'Add':
+                        with open("./var/banned_ips.txt",'r') as file:
+                            data = [i for i in file.read().split("\n") if i!=""]
+                            data.append(ip)
+                            success = "Done !"
+                        with open("./var/banned_ips.txt",'w') as file:
+                            file.write("\n".join(data))
+                    else:
+                        error = "Invalid arguments."
+
+                    with open("./var/banned_ips.txt",'r') as file:
+                        ips = file.read().split("\n")
+                        ips = {i:ips[i] for i in range(len(ips)) if ips[i]!=""}
+                    if success!="":
+                        return render_template("admin-banned.html",ips=ips,success=success)
+                    else:
+                        return render_template("admin-banned.html",ips=ips,error=error)
+                else:
+                    return redirect("/",code=302)
     return redirect("/login/", code=302)
 
 @app.route("/admin/")
