@@ -50,6 +50,12 @@ def my_form():
         else:
             return render_template("banned.html")
     else:
+        if request.cookies.get("user"):
+            if get_email_cookie(request.cookies.get("user")):
+                user = User()
+                email = get_email_cookie(request.cookies.get("user"))
+                if f"./users/{email}.xml" in glob.glob("./users/*"):
+                    return redirect("/user/", code=302)
         return render_template("login.html")
 
 @app.route('/register/', methods=["POST","GET"])
@@ -125,7 +131,7 @@ def instances():
                         ip = get_ip_by_id(liste_active_instances[0])
                     except:
                         ip=None
-                    return render_template("instances.html",instances=liste_active_instances,ip=ip)
+                    return render_template("instances.html",instances=liste_active_instances,ip=ip, success="The containers may need some time to deploy (1-5 minutes), please wait and refresh the page !")
                 except:
                     return redirect("/", code=302)
             else:
