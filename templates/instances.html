@@ -25,6 +25,11 @@
         <section class="bann">
             <h1>Instances</h1>
         </section>
+        {%if success%}
+            <div class="alert alert-success" role="alert">
+                {{success}}
+            </div>
+            {%endif%}
         <section class="main">
             <h1>Deploy an instance</h1>
             <a href="/download_config/">Download your configuration file (openvpn)</a>
