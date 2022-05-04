@@ -81,7 +81,7 @@ def delete_container(id,image):
 def deploy_instance_user(docker_id,email):
     with open("./var/challs.txt","r") as file:
         data = file.read().split("\n")
-        names = [i.split("-")[1] for i in data]
+        names = [i.split("-")[1] for i in data if i!=""]
     docker_name = names[int(docker_id)-1]
     if not os.path.isdir("./instances/"):
         os.mkdir("./instances/")
